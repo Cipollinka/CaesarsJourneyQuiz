@@ -14,11 +14,11 @@ import {OneSignal} from 'react-native-onesignal';
 import * as Device from 'react-native-device-info';
 import Params from './Params';
 import AppManagerStack from './AppManagerStack';
-import {MainApp} from './main-app';
+import GameScreen from './GameScreen';
 
 export default function AppManager() {
   const viewLoader = <LoadingScreen />;
-  const viewGame = <MainApp />;
+  const viewGame = <GameScreen />;
   const appManagerStack = <AppManagerStack />;
 
   const [isLoadingScreen, setLoadingScreen] = useState(true);

@@ -3123,7 +3123,7 @@ __metadata:
     react-native-device-info: ^14.0.1
     react-native-gesture-handler: ^2.21.2
     react-native-image-picker: ^7.1.2
-    react-native-onesignal: ^5.2.7
+    react-native-onesignal: ^5.2.8
     react-native-safe-area-context: ^5.0.0
     react-native-screens: ^4.3.0
     react-native-sound: ^0.11.2
@@ -8192,12 +8192,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-onesignal@npm:^5.2.7":
-  version: 5.2.7
-  resolution: "react-native-onesignal@npm:5.2.7"
+"react-native-onesignal@npm:^5.2.8":
+  version: 5.2.8
+  resolution: "react-native-onesignal@npm:5.2.8"
   dependencies:
     invariant: ^2.2.2
-  checksum: d6defea415830bd02b2bb73d7e06a72cabc0516b1a0ab8008e505aedfdbcebfbb8065b83611892b04c6885d1b74d553d6b2dfe0b07ef5ba305887d2e583e09c6
+  checksum: c2240c00f9d6a2a79a37fa69993d9cc56c87dcfc3302a7394d9d8e52557b10320691e8631f27171e0f9fc82e92022b1138fde6b27fd5f0a5c2c0dd068f49c318
   languageName: node
   linkType: hard
 

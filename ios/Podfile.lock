@@ -10,9 +10,9 @@ PODS:
   - hermes-engine (0.74.6):
     - hermes-engine/Pre-built (= 0.74.6)
   - hermes-engine/Pre-built (0.74.6)
-  - OneSignalXCFramework (5.2.8):
-    - OneSignalXCFramework/OneSignalComplete (= 5.2.8)
-  - OneSignalXCFramework/OneSignal (5.2.8):
+  - OneSignalXCFramework (5.2.9):
+    - OneSignalXCFramework/OneSignalComplete (= 5.2.9)
+  - OneSignalXCFramework/OneSignal (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalExtension
     - OneSignalXCFramework/OneSignalLiveActivities
@@ -20,38 +20,38 @@ PODS:
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalComplete (5.2.8):
+  - OneSignalXCFramework/OneSignalComplete (5.2.9):
     - OneSignalXCFramework/OneSignal
     - OneSignalXCFramework/OneSignalInAppMessages
     - OneSignalXCFramework/OneSignalLocation
-  - OneSignalXCFramework/OneSignalCore (5.2.8)
-  - OneSignalXCFramework/OneSignalExtension (5.2.8):
+  - OneSignalXCFramework/OneSignalCore (5.2.9)
+  - OneSignalXCFramework/OneSignalExtension (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalInAppMessages (5.2.8):
+  - OneSignalXCFramework/OneSignalInAppMessages (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalLiveActivities (5.2.8):
+  - OneSignalXCFramework/OneSignalLiveActivities (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalLocation (5.2.8):
+  - OneSignalXCFramework/OneSignalLocation (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalNotifications (5.2.8):
+  - OneSignalXCFramework/OneSignalNotifications (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalExtension
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalOSCore (5.2.8):
+  - OneSignalXCFramework/OneSignalOSCore (5.2.9):
     - OneSignalXCFramework/OneSignalCore
-  - OneSignalXCFramework/OneSignalOutcomes (5.2.8):
+  - OneSignalXCFramework/OneSignalOutcomes (5.2.9):
     - OneSignalXCFramework/OneSignalCore
-  - OneSignalXCFramework/OneSignalUser (5.2.8):
+  - OneSignalXCFramework/OneSignalUser (5.2.9):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
@@ -1010,8 +1010,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-onesignal (5.2.7):
-    - OneSignalXCFramework (= 5.2.8)
+  - react-native-onesignal (5.2.8):
+    - OneSignalXCFramework (= 5.2.9)
     - React (< 1.0.0, >= 0.13.0)
   - react-native-safe-area-context (5.0.0):
     - React-Core
@@ -1570,7 +1570,7 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
   hermes-engine: 2102c92e54a031a270fd1fe84169ec8a0901b7bd
-  OneSignalXCFramework: 4215fb8deb8a669504d39c02dffaf2ec8ebe10ae
+  OneSignalXCFramework: f5b2a3c4f130e4c910ead7bb25bed7455e976fbf
   RCT-Folly: 5dc73daec3476616d19e8a53f0156176f7b55461
   RCTDeprecation: 5f1d7e1f8ef6c53f0207e3ac0d0ca23575e8a6ab
   RCTRequired: dcfd24ece09940bbf24b7c2974f4eb68a9baee55
@@ -1598,7 +1598,7 @@ SPEC CHECKSUMS:
   react-native-apple-ads-attribution: a545d8779cc262d4ae7c47c0e2bfdd6baa8bda8c
   react-native-appsflyer: 24c078b1fec256fb6d9a9bf520c87e1c15f5368c
   react-native-image-picker: 6f7695f6e5aa43dc6275cbb3198cfa066a2f5be4
-  react-native-onesignal: 439c090f45a362ee8074d8821780a2380f002054
+  react-native-onesignal: 1795c532f8bd86c3307a032621c17d85998402d0
   react-native-safe-area-context: 314537f8fca6fe2c06bd53fc8905efa9e6aaaf59
   react-native-tracking-transparency: 15eb319f2b982070eb9831582af27d87badfa624
   react-native-webview: ad8dc2d03264427555e6841b214e4f5d2255f6b6
