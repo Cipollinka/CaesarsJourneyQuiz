@@ -12,13 +12,13 @@ import AppleAdsAttributionInstance from '@vladikstyle/react-native-apple-ads-att
 import {requestTrackingPermission} from 'react-native-tracking-transparency';
 import {OneSignal} from 'react-native-onesignal';
 import * as Device from 'react-native-device-info';
-import GameScreen from './GameScreen';
 import Params from './Params';
 import AppManagerStack from './AppManagerStack';
+import {MainApp} from './main-app';
 
 export default function AppManager() {
   const viewLoader = <LoadingScreen />;
-  const viewGame = <GameScreen />;
+  const viewGame = <MainApp />;
   const appManagerStack = <AppManagerStack />;
 
   const [isLoadingScreen, setLoadingScreen] = useState(true);
@@ -54,11 +54,11 @@ export default function AppManager() {
     OneSignal.initialize(Params.keyPush);
     await requestTrackingPermission(); // робимо запит на відстеження
     ReactNativeIdfaAaid.getAdvertisingInfoAndCheckAuthorization(true).then(
-      res => {
-        // обробляємо клік в алерт
-        adID.current = res.id ? res.id : 'error'; // отримуємо advertising id
-        initAppManager();
-      },
+        res => {
+          // обробляємо клік в алерт
+          adID.current = res.id ? res.id : 'error'; // отримуємо advertising id
+          initAppManager();
+        },
     );
   }
 
@@ -90,35 +90,35 @@ export default function AppManager() {
       }
     });
     OneSignal.User.addTag(
-      'timestamp_user_id',
-      `${new Date().getTime()}_${userID.current}`,
+        'timestamp_user_id',
+        `${new Date().getTime()}_${userID.current}`,
     ); // додаємо тег унікального користувача
   }
 
   const onInstallConversionDataCanceller = appsFlyer.onInstallConversionData(
-    res => {
-      try {
-        if (JSON.parse(res.data.is_first_launch) === true) {
-          if (res.data.af_status === 'Non-organic') {
-            subsRef.current = res.data.campaign;
-            generateFinish();
-          } else {
-            getAsaAttribution();
+      res => {
+        try {
+          if (JSON.parse(res.data.is_first_launch) === true) {
+            if (res.data.af_status === 'Non-organic') {
+              subsRef.current = res.data.campaign;
+              generateFinish();
+            } else {
+              getAsaAttribution();
+            }
           }
+        } catch (err) {
+          loadGame();
         }
-      } catch (err) {
-        loadGame();
-      }
-    },
+      },
   );
 
   async function getAsaAttribution() {
     try {
       const adServicesAttributionData =
-        await AppleAdsAttributionInstance.getAdServicesAttributionData();
+          await AppleAdsAttributionInstance.getAdServicesAttributionData();
       if (
-        !adServicesAttributionData ||
-        typeof adServicesAttributionData.attribution !== 'boolean'
+          !adServicesAttributionData ||
+          typeof adServicesAttributionData.attribution !== 'boolean'
       ) {
         generateFinish();
         return;
@@ -137,12 +137,12 @@ export default function AppManager() {
     OneSignal.User.getOnesignalId().then(res => {
       onesignalID.current = res;
       dataLoad.current =
-        Params.bodyLin +
-        `?${Params.bodyLin.split('space/')[1]}=1&appsID=${
-          appsID.current
-        }&adID=${adID.current}&onesignalID=${onesignalID.current}&deviceID=${
-          deviceID.current
-        }&userID=${deviceID.current}${generateSubs()}`;
+          Params.bodyLin +
+          `?${Params.bodyLin.split('space/')[1]}=1&appsID=${
+              appsID.current
+          }&adID=${adID.current}&onesignalID=${onesignalID.current}&deviceID=${
+              deviceID.current
+          }&userID=${deviceID.current}${generateSubs()}`;
       Storage.save('link', dataLoad.current);
       openAppManagerView(true, false);
     });
@@ -166,8 +166,8 @@ export default function AppManager() {
     }
     const subList = subsRef.current.split('_');
     const subParams = subList
-      .map((sub, index) => `sub_id_${index + 1}=${sub}`)
-      .join('&');
+        .map((sub, index) => `sub_id_${index + 1}=${sub}`)
+        .join('&');
 
     return `&${subParams}`;
   }
@@ -238,16 +238,16 @@ export default function AppManager() {
       };
       initialize();
       OneSignal.Notifications.addEventListener(
-        'click',
-        handleNotificationClick,
+          'click',
+          handleNotificationClick,
       );
       return () => {
         OneSignal.Notifications.removeEventListener(
-          'click',
-          handleNotificationClick,
+            'click',
+            handleNotificationClick,
         );
       };
-    }, 100);
+    }, 400);
   }, []);
 
   return isLoadingScreen ? viewLoader : isGameOpen ? viewGame : appManagerStack;

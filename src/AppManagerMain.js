@@ -12,7 +12,7 @@ import {
 import WebView from 'react-native-webview';
 
 import Storage from './Storage';
-import LoadingAppManager from './LoadingAppManager';
+import LoadingAppManager from './LoadingAppManager';;
 
 export default function AppManagerMain({navigation}) {
   const [linkRefresh, setLinkRefresh] = useState('');
@@ -34,31 +34,6 @@ export default function AppManagerMain({navigation}) {
     'https://winspirit.app/?identifier=',
     'https://rocketplay.com/api/payments',
     'https://ninewin.com/',
-    'https://checkout.payop.com/en/payment/status/processing/',
-  ];
-
-  const browserOpenDomens = [
-    'mailto:',
-    'itms-appss://',
-    'https://m.facebook.com/',
-    'https://www.facebook.com/',
-    'https://www.instagram.com/',
-    'https://twitter.com/',
-    'https://www.whatsapp.com/',
-    'https://t.me/',
-    'fb://',
-    'conexus://',
-    'bmoolbb://',
-    'cibcbanking://',
-    'bncmobile://',
-    'rbcmobile://',
-    'scotiabank://',
-    'pcfbanking://',
-    'tdct://',
-    'nl.abnamro.deeplink.psd2.consent://',
-    'nl-snsbank-sign://',
-    'nl-asnbank-sign://',
-    'triodosmobilebanking',
   ];
 
   const domensForBlock = [
@@ -87,7 +62,7 @@ export default function AppManagerMain({navigation}) {
     setTimeout(() => {
       if (currentURL === 'about:blank') {
         webViewRef.current.injectJavaScript(
-          `window.location.replace('${linkRefresh}')`,
+            `window.location.replace('${linkRefresh}')`,
         );
       }
     }, 2000);
@@ -95,29 +70,23 @@ export default function AppManagerMain({navigation}) {
 
   const onShouldStartLoadWithRequest = event => {
     let currentUrl = event.url;
-    console.log(event);
+    console.log(currentUrl);
 
     if (
-      event.mainDocumentURL.includes('pay.skrill.com') ||
-      event.mainDocumentURL.includes('app.corzapay.com')
+        event.mainDocumentURL.includes('pay.skrill.com') ||
+        event.mainDocumentURL.includes('app.corzapay.com') ||
+        event.mainDocumentURL.includes('https://checkout.payop.com/en/payment/invoice-preprocessing/')
     ) {
       navigation.navigate('child', {data: event.mainDocumentURL});
       webViewRef.current.injectJavaScript(
-        `window.location.replace('${linkRefresh}')`,
+          `window.location.replace('${linkRefresh}')`,
       );
     }
 
     if (checkLinkInArray(currentUrl, redirectDomens)) {
       webViewRef.current.injectJavaScript(
-        `window.location.replace('${linkRefresh}')`,
+          `window.location.replace('${linkRefresh}')`,
       );
-    }
-
-    if (checkLinkInArray(currentUrl, browserOpenDomens)) {
-      webViewRef.current.injectJavaScript(
-        `window.location.replace('${linkRefresh}')`,
-      );
-      Linking.openURL(currentUrl);
     }
 
     if (checkLinkInArray(currentUrl, domensForBlock)) {
@@ -133,8 +102,16 @@ export default function AppManagerMain({navigation}) {
     checkLockedURL(currentUrl);
   };
 
+  const [isDoubleClick, setDoubleClick] = useState(false);
+
   const isBackClick = () => {
+    if (isDoubleClick) {
+      webViewRef.current.injectJavaScript(`window.location.replace('${linkRefresh}')`);
+      return;
+    }
+    setDoubleClick(true);
     webViewRef.current.goBack();
+    setTimeout(() => setDoubleClick(false), 400);
   };
 
   const [isInit, setInit] = React.useState(false);
@@ -150,82 +127,97 @@ export default function AppManagerMain({navigation}) {
     }
   };
 
-  return (
-    <>
-      <View style={{flex: 1}}>
-        <SafeAreaView style={{flex: 1, backgroundColor: 'black'}}>
-          <StatusBar barStyle={'light-content'} />
-          <WebView
-            originWhitelist={[
-              '*',
-              'http://*',
-              'https://*',
-              'intent://*',
-              'tel:*',
-              'mailto:*',
-            ]}
-            onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-            onNavigationStateChange={stateChange}
-            source={{uri: linkRefresh}}
-            textZoom={100}
-            allowsBackForwardNavigationGestures={true}
-            domStorageEnabled={true}
-            javaScriptEnabled={true}
-            onLoadStart={() => setLoadingPage(true)}
-            onLoadEnd={() => finishLoading()}
-            allowsInlineMediaPlayback={true}
-            mediaPlaybackRequiresUserAction={false}
-            setSupportMultipleWindows={true}
-            contentMode="mobile"
-            allowFileAccess={true}
-            showsVerticalScrollIndicator={false}
-            javaScriptCanOpenWindowsAutomatically={true}
-            style={{flex: 1, marginBottom: 10}}
-            ref={webViewRef}
-            userAgent={
-              'Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Safari/604.1 Version/18.1'
-            }
-          />
-        </SafeAreaView>
-        <TouchableOpacity
-          style={{
-            width: 30,
-            height: 30,
-            position: 'absolute',
-            bottom: 5,
-            left: 25,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={isBackClick}>
-          <Image
-            source={require('./assets/images/_back.png')}
-            style={{width: '90%', height: '90%', resizeMode: 'contain'}}
-          />
-        </TouchableOpacity>
+  const openNewWindow = event => {
+    const {nativeEvent} = event;
+    const {targetURL} = nativeEvent;
+    console.log(targetURL);
+    navigation.navigate('child', {data: targetURL});
+  };
 
-        <TouchableOpacity
-          style={{
-            width: 30,
-            height: 30,
-            position: 'absolute',
-            bottom: 5,
-            right: 25,
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 5,
-          }}
-          onPress={() => {
-            webViewRef.current.reload();
-            setLoadingPage(true);
-          }}>
-          <Image
-            source={require('./assets/images/_reload.png')}
-            style={{width: '90%', height: '90%', resizeMode: 'contain'}}
-          />
-        </TouchableOpacity>
-      </View>
-      {isLoadingPage && !isInvisibleLoader ? <LoadingAppManager /> : <></>}
-    </>
+  return (
+      <>
+        <View style={{flex: 1}}>
+          <SafeAreaView style={{flex: 1, backgroundColor: 'black'}}>
+            <StatusBar barStyle={'light-content'} />
+            <WebView
+                originWhitelist={[
+                  '*',
+                  'http://*',
+                  'https://*',
+                  'intent://*',
+                  'tel:*',
+                  'mailto:*',
+                ]}
+                onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+                onNavigationStateChange={stateChange}
+                source={{uri: linkRefresh}}
+                textZoom={100}
+                allowsBackForwardNavigationGestures={true}
+                domStorageEnabled={true}
+                javaScriptEnabled={true}
+                onLoadStart={() => setLoadingPage(true)}
+                onLoadEnd={() => finishLoading()}
+                allowsInlineMediaPlayback={true}
+                mediaPlaybackRequiresUserAction={false}
+                onOpenWindow={(syntheticEvent) => {
+                  const { nativeEvent } = syntheticEvent;
+                  const { targetUrl } = nativeEvent;
+                  try {
+                    if (Linking.canOpenURL(targetUrl)) {
+                      navigation.navigate('child', {data: targetUrl});
+                    }
+                  } catch (error) {}
+                }}
+                setSupportMultipleWindows={false}
+                allowFileAccess={true}
+                showsVerticalScrollIndicator={false}
+                javaScriptCanOpenWindowsAutomatically={true}
+                style={{flex: 1, marginBottom: 10}}
+                ref={webViewRef}
+                userAgent={
+                  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Safari/604.1 Version/18.1'
+                }
+            />
+          </SafeAreaView>
+          <TouchableOpacity
+              style={{
+                width: 30,
+                height: 30,
+                position: 'absolute',
+                bottom: 5,
+                left: 25,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={isBackClick}>
+            <Image
+                source={require('./assets/images/_back.png')}
+                style={{width: '90%', height: '90%', resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+              style={{
+                width: 30,
+                height: 30,
+                position: 'absolute',
+                bottom: 5,
+                right: 25,
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 5,
+              }}
+              onPress={() => {
+                webViewRef.current.reload();
+                setLoadingPage(true);
+              }}>
+            <Image
+                source={require('./assets/images/_reload.png')}
+                style={{width: '90%', height: '90%', resizeMode: 'contain'}}
+            />
+          </TouchableOpacity>
+        </View>
+        {isLoadingPage && !isInvisibleLoader ? <LoadingAppManager /> : <></>}
+      </>
   );
 }
